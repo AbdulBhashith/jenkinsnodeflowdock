@@ -16,8 +16,15 @@ pipeline {
         }
         stage('Install Docker Compose') {
               steps {
-                sh 'curl -L https://github.com/docker/compose/releases/download/1.29.1/docker-compose-linux-amd64 -o /usr/local/bin/docker-compose'
-                sh 'chmod +x /usr/local/bin/docker-compose'
+                script {
+                  def dockerComposeVersion = '1.29.1'
+                  def os = 'linux'
+                  def arch = 'amd64'
+                  def dockerComposeUrl = "https://github.com/docker/compose/releases/download/${dockerComposeVersion}/docker-compose-${os}-${arch}"
+
+                  sh "sudo curl -L ${dockerComposeUrl} -o /usr/local/bin/docker-compose"
+                  sh "sudo chmod +x /usr/local/bin/docker-compose"
+                }
               }
             }
         stage('Check Docker Compose Version') {
