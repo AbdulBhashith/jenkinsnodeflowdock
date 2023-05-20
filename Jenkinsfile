@@ -14,11 +14,6 @@ pipeline {
                 sh 'docker --version'
             }
         }
-        stage('check block') {
-            steps {
-                step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: false])
-            }
-        }
         stage('Check Docker Compose Version') {
               steps {
                 sh 'docker-compose --version'
