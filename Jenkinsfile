@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('git clone') {
             steps {
-               git 'https://github.com/AbdulBhashith/jenkinsnodeflowdock'
+               git branch: 'main', url: 'https://github.com/AbdulBhashith/jenkinsnodeflowdock'
             }
         }
     }
