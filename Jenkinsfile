@@ -16,7 +16,7 @@ pipeline {
         }
         stage('docker compose') {
             steps {
-                sh '/usr/local/bin/docker-compose up -d'
+                step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'ExecuteCommandInsideContainer', command: 'docker-compose up -d', index: 1, privilegedMode: false, service: 'nodekeeper', workDir: ''], useCustomDockerComposeFile: false])
             }
         }
     }
