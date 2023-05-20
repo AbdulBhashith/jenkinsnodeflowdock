@@ -14,10 +14,21 @@ pipeline {
                 sh 'docker --version'
             }
         }
-        stage('docker compose') {
-            steps {
-                step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'ExecuteCommandInsideContainer', command: 'docker-compose up -d', index: 1, privilegedMode: false, service: 'mysqldb,app', workDir: '/var/jenkins_home/workspace/NodePipeline/'], useCustomDockerComposeFile: false])
+        stage('Install Docker Compose') {
+              steps {
+                sh 'curl -L https://github.com/docker/compose/releases/download/<DOCKER_COMPOSE_VERSION>/docker-compose-<OS>-<ARCH> -o /usr/local/bin/docker-compose'
+                sh 'chmod +x /usr/local/bin/docker-compose'
+              }
             }
-        }
+        stage('Check Docker Compose Version') {
+              steps {
+                sh 'docker-compose --version'
+              }
+            }
+        stage('Run Docker Compose') {
+              steps {
+                sh 'docker-compose up -d'
+              }
+            }
     }
 }
