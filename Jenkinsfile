@@ -22,8 +22,8 @@ pipeline {
                   def arch = 'amd64'
                   def dockerComposeUrl = "https://github.com/docker/compose/releases/download/${dockerComposeVersion}/docker-compose-${os}-${arch}"
 
-                  sh "sudo curl -L ${dockerComposeUrl} -o /usr/local/bin/docker-compose"
-                  sh "sudo chmod +x /usr/local/bin/docker-compose"
+                  sh "curl -L ${dockerComposeUrl} -o /usr/local/bin/docker-compose"
+                  sh "chmod +x /usr/local/bin/docker-compose"
                 }
               }
             }
