@@ -16,17 +16,17 @@ pipeline {
         }
         stage('check block') {
             steps {
-                step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: false])
+                step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker compose.yml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: false])
             }
         }
         stage('Check Docker Compose Version') {
               steps {
-                sh 'docker-compose --version'
+                sh 'docker compose --version'
               }
             }
         stage('Run Docker Compose') {
               steps {
-                sh 'docker-compose up -d'
+                sh 'docker compose up -d'
               }
             }
     }
