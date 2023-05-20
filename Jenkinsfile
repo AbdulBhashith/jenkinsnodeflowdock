@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Install Docker Compose') {
               steps {
-                sh 'curl -L https://github.com/docker/compose/releases/download/<DOCKER_COMPOSE_VERSION>/docker-compose-<OS>-<ARCH> -o /usr/local/bin/docker-compose'
+                sh 'curl -L https://github.com/docker/compose/releases/download/1.29.1/docker-compose-linux-amd64 -o /usr/local/bin/docker-compose'
                 sh 'chmod +x /usr/local/bin/docker-compose'
               }
             }
