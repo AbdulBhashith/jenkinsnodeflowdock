@@ -1,31 +1,33 @@
 pipeline {
-    agent any
-    tools {
-        dockerTool "docker"
-    }
-    stages {
-        stage('git clone') {
-            steps {
-               git branch: 'main', url: 'https://github.com/AbdulBhashith/jenkinsnodeflowdock'
+  agent any
+  tools {
+      dockerTool "docker"
+  }
+  stages {
+    stage('git clone') {
+      steps {
+         git branch: 'main', url: 'https://github.com/AbdulBhashith/jenkinsnodeflowdock'
             }
         }
-        stage('version') {
-            steps {
-                sh 'docker --version'
-            }
-        }
-            steps {
-                sh 'docker info'
-            }
-        stage('Check Docker Compose Version') {
-              steps {
-                sh 'docker-compose --version'
-              }
-            }
-        stage('Run Docker Compose') {
-              steps {
-                sh 'docker-compose up -d'
-              }
-            }
+    stage('Build') {
+      steps {
+        sh 'docker build -t abdulbhashiths/nodejenkins .'
+      }
     }
+    stage('Login') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+    stage('Push') {
+      steps {
+        sh 'docker push abdulbhashiths/nodejenkins'
+      }
+    }
+  }
+  post {
+    always {
+      sh 'docker logout'
+    }
+  }
 }
