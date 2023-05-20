@@ -12,9 +12,11 @@ pipeline {
         stage('version') {
             steps {
                 sh 'docker --version'
-                sh 'docker info'
             }
         }
+            steps {
+                sh 'docker info'
+            }
         stage('Check Docker Compose Version') {
               steps {
                 sh 'docker-compose --version'
