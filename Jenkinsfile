@@ -14,6 +14,11 @@ pipeline {
                 sh 'docker --version'
             }
         }
+        stage('check block') {
+            steps {
+                step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'ExecuteCommandInsideContainer', command: 'docker-compose up -d', index: 1, privilegedMode: false, service: 'mysqldb,app', workDir: '/var/jenkins_home/workspace/NodePipeline/'], useCustomDockerComposeFile: false])
+            }
+        }
         stage('Check Docker Compose Version') {
               steps {
                 sh 'docker-compose --version'
