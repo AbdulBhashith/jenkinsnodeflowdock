@@ -1,8 +1,29 @@
 pipeline {
-  agent any
-  tools {
-      dockerTool "docker"
+  agent {
+  kubernetes {
+    yaml '''
+      apiVersion: v1
+      kind: Pod
+      spec:
+        containers:
+        - name: docker
+          image: docker:latest
+          command:
+          - sleep
+          args:
+          - infinity
+          tty: true
+          volumeMounts:
+          - name: docker-sock
+            mountPath: /var/run/docker.sock
+        volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+      '''
   }
+}
+
   stages {
     stage('git clone') {
       steps {
